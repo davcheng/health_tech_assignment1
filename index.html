@@ -15,76 +15,140 @@
 		    	<h3>David Cheng - ddc88@cornell.edu</h3>
 	    	</div>
 	    </div>
-
 	    <div class="row">
 			<div class="large-12 columns">
-
-				<svg width="960" height="500"></svg>
+				*Note: Adblocker needs to be turned off (loading data from a CSV using C3)
 			</div>
 	    </div>
+	    <div class="row">
+			<div class="large-12 columns">
+				<h3><strong>1. Go / No Go</srong></h3>
+				<div id="gonogo"></div>
+				<h4>Mean response time vs. Mean Accuracy Rate</h4>
+				<h4>Min response time vs. Mean Accuracy Rate</h4>
+			</div>
+	    </div>
+	    <div class="row">
+			<div class="large-12 columns">
+				<h3><strong>1. Go / No Go</srong></h3>
+				<div id="gonogo"></div>
+				<h4>Mean response time vs. Mean Accuracy Rate</h4>
+				<h4>Min response time vs. Mean Accuracy Rate</h4>
+			</div>
+	    </div>
+	    <div class="row">
+			<div class="large-12 columns">
+				<h3>Balloon betting Analogue Risk Test (BART)</h3>
+				<div id="bart"></div>
+			</div>
+	    </div>
+	    <div class="row">
+			<div class="large-12 columns">
+				<h3>Delayed Discounting</h3>
+				<div id="delayeddiscounting"></div>
+			</div>
+	    </div>
+
+<!-- c3-->
+
+<!-- Load c3.css -->
+<link href="bower_components/c3/c3.css" rel="stylesheet" type="text/css">
+
+<!-- Load d3.js and c3.js -->
+<script src="bower_components/d3/d3.min.js" charset="utf-8"></script>
+<script src="bower_components/c3/c3.min.js"></script>
+
+<script>
+//GoNoGo
+var chart = c3.generate({
+    bindto: '#gonogo',
+    data: {
+      // columns: [
+      //   ['data1', 30, 200, 100, 400, 150, 250],
+      //   ['data2', 50, 20, 10, 40, 15, 25]
+      // ]
+
+		url: 'data/GoNoGo.csv'
+  //   	type: 'line'
+    },
+    axis: {
+      y: {
+        label: { // ADD
+          text: 'Y Label',
+          position: 'outer-middle'
+        }
+      },
+      x: {
+        label: { // ADD
+          text: 'X Label',
+          position: 'outer-middle'
+        }
+      }
+    }
+});
+
+//BART
+var chart = c3.generate({
+    bindto: '#bart',
+    data: {
+      // columns: [
+      //   ['data1', 30, 200, 100, 400, 150, 250],
+      //   ['data2', 50, 20, 10, 40, 15, 25]
+      // ]
+
+		url: 'data/BART.csv'
+  //   	type: 'line'
+    },
+    axis: {
+      y: {
+        label: { // ADD
+          text: 'Y Label',
+          position: 'outer-middle'
+        }
+      },
+      x: {
+        label: { // ADD
+          text: 'X Label',
+          position: 'outer-middle'
+        }
+      }
+    }
+});
+
+//delayed discounting
+var chart = c3.generate({
+    bindto: '#delayeddiscounting',
+    data: {
+      // columns: [
+      //   ['data1', 30, 200, 100, 400, 150, 250],
+      //   ['data2', 50, 20, 10, 40, 15, 25]
+      // ]
+
+		url: 'data/DelayedDiscounting.csv'
+  //   	type: 'line'
+    },
+    axis: {
+      y: {
+        label: { // ADD
+          text: 'Y Label',
+          position: 'outer-middle'
+        }
+      },
+      x: {
+        label: { // ADD
+          text: 'X Label',
+          position: 'outer-middle'
+        }
+      }
+    }
+});
+</script>
 
 		<script src="https://d3js.org/d3.v4.min.js"></script>
 	    <script src="js/vendor/jquery.js"></script>
 	    <script src="js/vendor/what-input.js"></script>
 	    <script src="js/vendor/foundation.js"></script>
 	    <script src="js/app.js"></script>
-	    <script>
-
-			var svg = d3.select("svg"),
-			    margin = {top: 20, right: 20, bottom: 30, left: 50},
-			    width = +svg.attr("width") - margin.left - margin.right,
-			    height = +svg.attr("height") - margin.top - margin.bottom,
-			    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-			var parseTime = d3.timeParse("%d-%b-%y");
-
-			var x = d3.scaleTime()
-			    .rangeRound([0, width]);
-
-			var y = d3.scaleLinear()
-			    .rangeRound([height, 0]);
-
-			var line = d3.line()
-			    .x(function(d) { return x(d.date); })
-			    .y(function(d) { return y(d.close); });
-
-			d3.tsv("data/data.csv", function(d) {
-			  d.date = parseTime(d.date);
-			  d.close = +d.close;
-			  return d;
-			}, function(error, data) {
-			  if (error) throw error;
-
-			  x.domain(d3.extent(data, function(d) { return d.date; }));
-			  y.domain(d3.extent(data, function(d) { return d.close; }));
-
-			  g.append("g")
-			      .attr("transform", "translate(0," + height + ")")
-			      .call(d3.axisBottom(x))
-			    .select(".domain")
-			      .remove()
-			      .text("Response Time");
-
-			  g.append("g")
-			      .call(d3.axisLeft(y))
-			    .append("text")
-			      .attr("fill", "#000")
-			      .attr("transform", "rotate(-90)")
-			      .attr("y", 6)
-			      .attr("dy", "0.71em")
-			      .attr("text-anchor", "end")
-			      .text("Accuracy rate");
-
-			  g.append("path")
-			      .datum(data)
-			      .attr("fill", "none")
-			      .attr("stroke", "steelblue")
-			      .attr("stroke-linejoin", "round")
-			      .attr("stroke-linecap", "round")
-			      .attr("stroke-width", 1.5)
-			      .attr("d", line);
-			});
-
-		</script>
+	   
 	</body>
 </html>
