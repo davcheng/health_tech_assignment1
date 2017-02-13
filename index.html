@@ -11,27 +11,53 @@
 	<body>
 	    <div class="row">
 	    	<div class="large-12 columns">
-		    	<h1>Health Tech Assignment 1</h1>
+		    	<h1><strong>Health Tech Assignment 1</strong></h1>
 		    	<h3>David Cheng - ddc88@cornell.edu</h3>
 	    	</div>
 	    </div>
 	    <div class="row">
 			<div class="large-12 columns">
-				*Note: Adblocker needs to be turned off (loading data from a CSV using C3)
+				*Note: Adblocker needs to be turned off (loading data from a CSV using C3) or hit command+shift+R on mac
 			</div>
 	    </div>
+            <hr>
 	    <div class="row">
 			<div class="large-12 columns">
 				<h3><strong>1. Go / No Go</srong></h3>
-				<div id="gonogo"></div>
-				<h4>Mean response time vs. Mean Accuracy Rate</h4>
-				<h4>Min response time vs. Mean Accuracy Rate</h4>
+				<h4 class="text-center">Mean response time (Correct) vs. Mean Accuracy Rate</h4>
+        <div id="gonogo1"></div>
+        <blockquote>
+            <p>Based on the collected data, the first graph for Go/No Go delineates the tradeoff between response accuracy, and response speed. As depicted in the graph, the test results indicate that a slower response time leads to an improvement in response accuracy.</p>
+        </blockquote>
+
+        <h4 class="text-center">Minimum response time vs. Mean Accuracy Rate</h4>
+        <div id="gonogo2"></div>
+        <blockquote>
+            <p>Based on the collected data, the first graph for Go/No Go delineates the tradeoff between response accuracy, and response speed. As depicted in the graph, the test results indicate that a slower response time leads to an improvement in response accuracy.</p>
+        </blockquote>
+
+        <h4 class="text-center">Mean response time (Incorrect) vs. Mean Accuracy Rate</h4>
+        <div id="gonogo3"></div>
+        <blockquote>
+            <p>Perhaps the strongest trend was present in the plotting of mean response time of incorrect with the mean accuracy rate. As shown, </p>
+        </blockquote>
+
 			</div>
 	    </div>
+      <hr>
 	    <div class="row">
 			<div class="large-12 columns">
 				<h3><strong>2. Balloon betting Analogue Risk Test (BART)<strong></h3>
-				<div id="bart"></div>
+        <!-- first chart -->
+        <h4 class="text-center">Mean Pumps Comparison (after explosion/after no explosion)</h4>
+				<div id="bartone"></div>
+        <blockquote>
+            <p>In the Balloon betting analogue risk test, the first point visualized depicts the comparison between number of pumps following an explosion versus the number following no explosion (collection). The results show that in almost all circumstances, the subject was more risk adverse following an explosion, with a resulting pump average of XXXX post-explosion versus XXXX post-no-explosion.</p>
+        </blockquote>
+
+        <!-- first chart -->
+        <h4 class="text-center"># of Explosions vs. Mean Pumps</h4>
+        <div id="barttwo"></div>
 			</div>
 	    </div>
 	    <div class="row">
@@ -51,57 +77,163 @@
 <script src="bower_components/c3/c3.min.js"></script>
 
 <script>
-//GoNoGo
+//GoNoGo1
 var chart = c3.generate({
-    bindto: '#gonogo',
+    bindto: '#gonogo1',
     data: {
-      // columns: [
-      //   ['data1', 30, 200, 100, 400, 150, 250],
-      //   ['data2', 50, 20, 10, 40, 15, 25]
-      // ]
-		url: 'data/GoNoGo.csv',
-		x: 'Mean Accuracy',
-		y: 'Mean Response Time'
-  //   	type: 'line'
+  		url: 'data/gonogo1.csv',
+  		x: 'Mean Response Time (Correct)',
+  		y: 'Mean Accuracy'
     },
     axis: {
       y: {
         label: { // ADD
-          text: 'Y Label',
+          text: 'Mean Accuracy',
           position: 'outer-middle'
         }
       },
       x: {
         label: { // ADD
-          text: 'X Label',
+          text: 'Mean Response Time (Correct)',
           position: 'outer-middle'
         }
       }
     }
 });
 
-//BART
+//GoNoGo2
 var chart = c3.generate({
-    bindto: '#bart',
+    bindto: '#gonogo2',
     data: {
       // columns: [
       //   ['data1', 30, 200, 100, 400, 150, 250],
       //   ['data2', 50, 20, 10, 40, 15, 25]
       // ]
-
-		url: 'data/BART.csv'
-  //   	type: 'line'
+    url: 'data/gonogo2.csv',
+    x: 'Minumum Response Time',
+    y: 'Mean Accuracy'
+  //    type: 'line'
     },
     axis: {
       y: {
         label: { // ADD
-          text: 'Y Label',
+          text: 'Mean Accuracy',
           position: 'outer-middle'
         }
       },
       x: {
         label: { // ADD
-          text: 'X Label',
+          text: 'Minumum Response Time',
+          position: 'outer-middle'
+        }
+      }
+    }
+});
+
+//GoNoGo3
+var chart = c3.generate({
+    bindto: '#gonogo3',
+    data: {
+    url: 'data/gonogo3.csv',
+    x: 'Mean Response Time (Incorrect)',
+    y: 'Mean Accuracy'
+  //    type: 'line'
+    },
+    axis: {
+      y: {
+        label: { // ADD
+          text: 'Mean Accuracy',
+          position: 'outer-middle'
+        }
+      },
+      x: {
+        label: { // ADD
+          text: 'Mean Response Time (Incorrect)',
+          position: 'outer-middle'
+        }
+      }
+    }
+});
+
+//BART1: pump after explosion vs pump after no explosion
+var chart = c3.generate({
+    bindto: '#bartone',
+    data: {
+      columns: [
+        ['Mean pumps after no explosion', 3.666666667, 2.272727273, 3.222222222, 6.625, 3.8, 3.545454545, 3.666666667, 3.333333333],
+        
+        ['Mean pumps after explosion', 2.333333333, 2.5, 3.333333333, 3.857142857, 2.8, 3, 2, 3.166666667]
+      ],
+        type: 'bar',
+        types: {
+          'Mean pumps after explosion': 'line',
+          'Mean pumps after no explosion': 'line'
+        },
+    },
+    axis: {
+      y: {
+        label: { // ADD
+          text: 'Mean Pumps',
+          position: 'outer-middle'
+        }
+      },
+      x: {
+        label: { // ADD
+          text: 'Trial',
+          position: 'outer-middle'
+        }
+      }
+    }
+});
+
+//BART1: pump after explosion vs pump after no explosion
+// var chart = c3.generate({
+//     bindto: '#bartone',
+//     data: {
+//       url: 'data/old/bart.csv',
+//         type: 'bar',
+//     x: 'Mean pumps after explosion',
+//     y: 'Mean pumps after no explosion'
+//     },
+//     axis: {
+//       y: {
+//         label: { // ADD
+//           text: 'Mean pumps after no explosion',
+//           position: 'outer-middle'
+//         }
+//       },
+//       x: {
+//         label: { // ADD
+//           text: 'Mean pumps after explosion',
+//           position: 'outer-middle'
+//         }
+//       }
+//     }
+// });
+
+//BART2:
+var chart = c3.generate({
+    bindto: '#barttwo',
+    data: {
+      // columns: [
+      //   ['data1', 30, 200, 100, 400, 150, 250],
+      //   ['data2', 50, 20, 10, 40, 15, 25]
+      // ],
+    url: 'data/BART_2.csv',
+    x: 'Standard deviation pumps',
+    y: 'Mean pumps',
+     // type: 'line'
+    },
+    axis: {
+      y: {
+        label: { // ADD
+          text: 'Mean pumps',
+          position: 'outer-middle'
+        }
+      },
+      x: {
+        label: { // ADD
+          text: 'Standard deviation pumps',
           position: 'outer-middle'
         }
       }
@@ -112,12 +244,14 @@ var chart = c3.generate({
 var chart = c3.generate({
     bindto: '#delayeddiscounting',
     data: {
-      // columns: [
-      //   ['data1', 30, 200, 100, 400, 150, 250],
-      //   ['data2', 50, 20, 10, 40, 15, 25]
-      // ]
-
-		url: 'data/DelayDiscounting.csv'
+      columns: [
+        ["trial1", 3.162909984588623, 2.141151011, 23.060561, 1.293748975, 2.407202005, 5.244120001792908],
+        [1.913070023059845, 7.04273802, 6.309521973, 3.692605972, 2.042710006, 2.192610025405884],
+        [18.41196501255035, 2.159123003, 1.077604949, 1.525524974, 3.723178983, 2.376641988754272],
+        [0.6311240196228027, 0.622853994, 0.193563998, 0.242182016, 0.308747947, 1.459280967712402],
+        [0.3773999810218811, 0.210361004, 0.240945995, 0.540439963, 0.510918021, 0.6066060066223145],
+        [0.5462440252304077, 0.275538027, 0.160519958, 0.175094008, 0.290441036, 0.4630060195922852]
+      ],
   //   	type: 'line'
     },
     axis: {
@@ -135,6 +269,8 @@ var chart = c3.generate({
       }
     }
 });
+
+
 </script>
 
 		<script src="https://d3js.org/d3.v4.min.js"></script>
