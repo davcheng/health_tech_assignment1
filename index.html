@@ -16,11 +16,17 @@
 	    	</div>
 	    </div>
 	    <div class="row">
-			<div class="large-12 columns">
-				*Note: If charts are not loading, try a hard refresh (command+shift+R on mac)<br>
-        **Note2: If that doesn't work, try turning off Adblocker (since loading data from a CSV using D3) 
-			</div>
+  			<div class="large-12 columns">
+  				*Note: If charts are not loading, try a hard refresh (command+shift+R on mac)<br>
+          **Note2: If that doesn't work, try turning off Adblocker (since loading data from a CSV using D3) 
+  			</div>
 	    </div>
+      <div class="row">
+        <div class="large-12 columns">
+          <h3><strong>Tools and Approach</strong></h3>
+          <h4>Data was analyzed using excel to calcualte averages and identify correlations (via the data analysis toolpack). Once trends were explored and identified, the data was plotted using <a href="https://d3js.org/" target="_blank">D3</a> and <a href="http://c3js.org" target="_blank">C3</a>, a reusable javascript wrapper for D3. This website styling was built using <a href="http://foundation.zurb.com/" target="_blank">foundation</a> for styling.</h4>
+        </div>
+      </div>
             <hr>
 	    <div class="row">
 			<div class="large-12 columns">
@@ -34,13 +40,13 @@
         <h4 class="text-center">Mean response time (Incorrect) vs. Mean Accuracy Rate</h4>
         <div id="gonogo3"></div>
         <blockquote>
-            <p>Perhaps the strongest trend is visible when plotting the mean response time of incorrect responses with the mean accuracy rate. This chart may call out the "trigger finger" scenarios and how quick, incorrect responses may demonstrate less care, and therefore, result in lower accuracy.</p>
+            <p>The second go/no-go chart depicts a strong trend between the mean response time of incorrect responses and the mean accuracy rate. As illustrated, the slower the mean response time, the better the accuracy rate. This chart may indicate that "trigger fingers" may often lead to incorrect responses, perhaps demonstrating less carefulness during the responses.</p>
         </blockquote>
 
-        <h4 class="text-center">Minimum response time vs. Mean Accuracy Rate</h4>
+        <h4 class="text-center">Maximum response time vs. Mean Accuracy Rate</h4>
         <div id="gonogo2"></div>
         <blockquote>
-            <p>BLAH</p>
+            <p>The final go/no-go chart compares the maximum response time versus the mean accuracy rate. As shown, the lowest maximum response time yields the worst accuracy rate (52%). Interestingly enough, although the response accuracy does improve as response times increase, there is an eventual tapering off, suggesting that after a certain threshold, the accuracy may not be influenced by response time (since human reaction times are estimated to be around 300 milliseconds).</p>
         </blockquote>
 
 
@@ -78,24 +84,24 @@
 			<div class="large-12 columns">
 				<h3><strong>3. Delayed Discounting<strong></h3>
         <!-- first chart -->
-        <h4 class="text-center">Average Response (Decision) Time per Decision Type</h4>
+        <h4 class="text-center">Average Response (Decision) Time over Responses</h4>
 				<div id="delay1"></div>
         <blockquote>
-            <p>The average response time per decision was charted for each decision type. </p>
+            <p>The average response time per decision was charted for each decision type. While it is difficult to draw any direct correlations, it is interesting to note that each type took the longest for at least one of the response sections. This lack of a pattern may hint that there may be many hidden variables which impact decision time.</p>
         </blockquote>  
 
         <!-- second chart -->
-        <h4 class="text-center">Average Response (Decision) Time over Responses</h4>
+        <h4 class="text-center">Average Response (Decision) Time per Decision Type</h4>
         <div id="delay2"></div>
         <blockquote>
-            <p>The above chart illustrates that the response time for making a decision gradually decreases over each decision. This may be caused by the fact that the user is gradually pushed to identify a "breaking point" that enables future decisions to be progressively easier.</p>
+            <p>The chart above delineates the average response time for each type of decision. As illustrated, decisions with a 1 month duration took longer decide than those related to the 6 month timeframe. Additionally, decisions relating to money took longer to make than those relating to time off. This may hint at the notion that direct decisions are easier to make than indirect decisions (money, something easily quantifiable, versus time off, which is far more complex to quantify).</p>
         </blockquote>        
 
         <!-- third chart -->
         <h4 class="text-center">Average Response (Decision) Time over Responses</h4>
         <div id="delay3"></div>
         <blockquote>
-            <p>blah.</p>
+            <p>The above chart illustrates that the response time for making a decision gradually decreases over each decision. This may be caused by the fact that the user is gradually pushed to identify a "breaking point" that enables future decisions to be progressively easier.</p>
         </blockquote>      
 			</div>
 	    </div>
@@ -121,7 +127,7 @@ var chart = c3.generate({
     axis: {
       y: {
         label: { // ADD
-          text: 'Mean Accuracy (%)',
+          text: 'Mean Accuracy (probability)',
           position: 'outer-middle'
         }
       },
@@ -153,14 +159,14 @@ var chart = c3.generate({
     //     data2: 'bar' // ADD
     //   }
     // },
-    x: 'Minumum Response Time',
+    x: 'Maximum Response Time',
     y: 'Mean Accuracy',
      type: 'line'
     },
     axis: {
       y: {
         label: { // ADD
-          text: 'Mean Accuracy (%)',
+          text: 'Mean Accuracy (probability)',
           position: 'outer-middle'
         }
       },
@@ -169,7 +175,7 @@ var chart = c3.generate({
           format: function (x) { return Math.round(x * 10) / 10; }
         },
         label: { // ADD
-          text: 'Minumum Response Time (ms)',
+          text: 'Maximum Response Time (ms)',
           position: 'outer-middle'
         }
       }
@@ -188,7 +194,7 @@ var chart = c3.generate({
     axis: {
       y: {
         label: { // ADD
-          text: 'Mean Accuracy (%)',
+          text: 'Mean Accuracy (probability)',
           position: 'outer-middle'
         }
       },
@@ -330,9 +336,9 @@ var chart = c3.generate({
     bindto: '#delay2',
     data: {
       columns: [
-        ["Decision Time", 3.102955741, 2.16738327, 1.587446269,1.545166502],
+        ["data1", 3.102955741, 2.16738327, 1.587446269, 1.545166502]
       ],
-      type: 'line',
+      type: 'bar',
     },
     axis: {
       y: {
@@ -342,8 +348,10 @@ var chart = c3.generate({
         }
       },
       x: {
+        type: 'category',
+        categories: ["dd_money_1_month","dd_money_6_month","dd_time_1_month","dd_time_6_month"],
         label: { // ADD
-          text: 'Decision No. (count)',
+          text: 'Trial Type',
           position: 'outer-middle'
         }
       }
