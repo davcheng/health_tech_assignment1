@@ -17,7 +17,8 @@
 	    </div>
 	    <div class="row">
 			<div class="large-12 columns">
-				*Note: Adblocker needs to be turned off (loading data from a CSV using C3) or hit command+shift+R on mac
+				*Note: If charts are not loading, try a hard refresh (command+shift+R on mac)<br>
+        **Note2: If that doesn't work, try turning off Adblocker (since loading data from a CSV using D3) 
 			</div>
 	    </div>
             <hr>
@@ -27,20 +28,22 @@
 				<h4 class="text-center">Mean response time (Correct) vs. Mean Accuracy Rate</h4>
         <div id="gonogo1"></div>
         <blockquote>
-            <p>Based on the collected data, the first graph for Go/No Go delineates the tradeoff between response accuracy, and response speed. As depicted in the graph, the test results indicate that a slower response time leads to an improvement in response accuracy. However</p>
-        </blockquote>
-
-        <h4 class="text-center">Minimum response time vs. Mean Accuracy Rate</h4>
-        <div id="gonogo2"></div>
-        <blockquote>
-            <p>Based on the collected data, the first graph for Go/No Go delineates the tradeoff between response accuracy, and response speed. As depicted in the graph, the test results indicate that a slower response time leads to an improvement in response accuracy.</p>
+            <p>Based on the collected data, the first graph for Go/No Go delineates the tradeoff between response accuracy, and response speed. As depicted in the graph, the test results indicate that a slower response time leads to an improvement in response accuracy. However, it seems that after 300 ms, the strength of correlation diminishes as other factors, such as alertness may come into play.</p>
         </blockquote>
 
         <h4 class="text-center">Mean response time (Incorrect) vs. Mean Accuracy Rate</h4>
         <div id="gonogo3"></div>
         <blockquote>
-            <p>Perhaps the strongest trend was present in the plotting of mean response time of incorrect with the mean accuracy rate. As shown, </p>
+            <p>Perhaps the strongest trend is visible when plotting the mean response time of incorrect responses with the mean accuracy rate. This chart may call out the "trigger finger" scenarios and how quick, incorrect responses may demonstrate less care, and therefore, result in lower accuracy.</p>
         </blockquote>
+
+        <h4 class="text-center">Minimum response time vs. Mean Accuracy Rate</h4>
+        <div id="gonogo2"></div>
+        <blockquote>
+            <p>BLAH</p>
+        </blockquote>
+
+
 
 			</div>
 	    </div>
@@ -52,21 +55,48 @@
         <h4 class="text-center">Mean Pumps Comparison (after explosion/after no explosion)</h4>
 				<div id="bart1"></div>
         <blockquote>
-            <p>In the Balloon betting analogue risk test, the first point visualized depicts the comparison between number of pumps following an explosion versus the number following no explosion (collection). The results show that in almost all circumstances, the subject was more risk adverse following an explosion, with a resulting pump average of XXXX post-explosion versus XXXX post-no-explosion.</p>
+            <p>In the Balloon betting analogue risk test, the first point visualized depicts the comparison between number of pumps following an explosion versus the number following no explosion (collection). The results show that in almost all circumstances, the subject was more risk adverse following an explosion, with a resulting pump average of <strong>2.87</strong> post-explosion versus <strong>3.77</strong> post-no-explosion.</p>
         </blockquote>
 
-        <!-- first chart -->
-        <h4 class="text-center"># of Explosions vs. Mean Pumps</h4>
+        <!-- second chart -->
+        <h4 class="text-center">Number of Explosions vs. Range of Pumps</h4>
         <div id="bart2"></div>
         <blockquote>
-            <p>The above graph illustrates that .</p>
-        </blockquote>        
+            <p>The above graph illustrates a nuanced example of user callibration. In the beginning, the user is unsure of how many explosions is considered "good" or "bad". After 7 explosions, the user lowers his risk-profile (highlighted by the low number of pumps), and after seeing a decreased number of explosions, increases his risk tolerance. Eventually, the user is able to increase the range of pumps over the number of explosions (reversing the initial trend).</p>
+        </blockquote>   
+
+        <!-- third chart -->
+        <h4 class="text-center">Standard Deviation vs. Mean Pumps</h4>
+        <div id="bart3"></div>
+        <blockquote>
+            <p>The graph of standard deviation and mean pumps illustrates the user's playing style. The first trial ran had very little standard deviation, due to initial apprehension caused by unfamiliarity with the game. The clustering of 6 trials around 3.3 pumps illustrates that, regardless of standard deviation, the user will tend to stick to a "strategy", regardless of intentionality. </p>
+        </blockquote>  
+
 			</div>
 	    </div>
 	    <div class="row">
 			<div class="large-12 columns">
 				<h3><strong>3. Delayed Discounting<strong></h3>
-				<div id="delayeddiscounting"></div>
+        <!-- first chart -->
+        <h4 class="text-center">Average Response (Decision) Time per Decision Type</h4>
+				<div id="delay1"></div>
+        <blockquote>
+            <p>The average response time per decision was charted for each decision type. </p>
+        </blockquote>  
+
+        <!-- second chart -->
+        <h4 class="text-center">Average Response (Decision) Time over Responses</h4>
+        <div id="delay2"></div>
+        <blockquote>
+            <p>The above chart illustrates that the response time for making a decision gradually decreases over each decision. This may be caused by the fact that the user is gradually pushed to identify a "breaking point" that enables future decisions to be progressively easier.</p>
+        </blockquote>        
+
+        <!-- third chart -->
+        <h4 class="text-center">Average Response (Decision) Time over Responses</h4>
+        <div id="delay3"></div>
+        <blockquote>
+            <p>blah.</p>
+        </blockquote>      
 			</div>
 	    </div>
 
@@ -91,13 +121,16 @@ var chart = c3.generate({
     axis: {
       y: {
         label: { // ADD
-          text: 'Mean Accuracy',
+          text: 'Mean Accuracy (%)',
           position: 'outer-middle'
         }
       },
       x: {
+        tick: {
+          format: function (x) { return Math.round(x * 10) / 10; }
+        },
         label: { // ADD
-          text: 'Mean Response Time (Correct)',
+          text: 'Mean Response Time (Correct) (ms)',
           position: 'outer-middle'
         }
       }
@@ -113,20 +146,30 @@ var chart = c3.generate({
       //   ['data2', 50, 20, 10, 40, 15, 25]
       // ]
     url: 'data/gonogo2.csv',
+    // axes: {
+    //     data2: 'Minumum Response Time'
+    //   },
+    //   types: {
+    //     data2: 'bar' // ADD
+    //   }
+    // },
     x: 'Minumum Response Time',
-    y: 'Mean Accuracy'
-  //    type: 'line'
+    y: 'Mean Accuracy',
+     type: 'line'
     },
     axis: {
       y: {
         label: { // ADD
-          text: 'Mean Accuracy',
+          text: 'Mean Accuracy (%)',
           position: 'outer-middle'
         }
       },
       x: {
+        tick: {
+          format: function (x) { return Math.round(x * 10) / 10; }
+        },
         label: { // ADD
-          text: 'Minumum Response Time',
+          text: 'Minumum Response Time (ms)',
           position: 'outer-middle'
         }
       }
@@ -145,15 +188,19 @@ var chart = c3.generate({
     axis: {
       y: {
         label: { // ADD
-          text: 'Mean Accuracy',
+          text: 'Mean Accuracy (%)',
           position: 'outer-middle'
         }
       },
       x: {
+        tick: {
+          format: function (x) { return Math.round(x * 10) / 10; }
+        },
         label: { // ADD
-          text: 'Mean Response Time (Incorrect)',
+          text: 'Mean Response Time (Incorrect) (ms)',
           position: 'outer-middle'
-        }
+        },
+
       }
     }
 });
@@ -167,32 +214,58 @@ var chart = c3.generate({
         
         ['Mean pumps after explosion', 2.333333333, 2.5, 3.333333333, 3.857142857, 2.8, 3, 2, 3.166666667]
       ],
-        type: 'bar',
+        // type: 'bar',
         types: {
-          'Mean pumps after explosion': 'line',
-          'Mean pumps after no explosion': 'line'
+          'Mean pumps after no explosion': 'line',
+          'Mean pumps after explosion': 'line'
         },
     },
     axis: {
       y: {
         label: { // ADD
-          text: 'Mean Pumps',
+          text: 'Mean Pumps (#)',
           position: 'outer-middle'
         }
       },
       x: {
         label: { // ADD
-          text: 'Trial',
+          text: 'Trial No. (#)',
           position: 'outer-middle'
         }
       }
     }
 });
 
-
 //BART2:
 var chart = c3.generate({
     bindto: '#bart2',
+    data: {
+      columns: [
+        ['Range of Pumps',5, 3, 5, 9, 4, 5, 5, 7],
+        ['Number of Explosions', 7, 4, 6, 7, 6, 4, 4, 6]
+      ],
+        // type: 'bar',
+     type: 'line'
+    },
+    axis: {
+      y: {
+        label: { // ADD
+          text: 'Count (#)',
+          position: 'outer-middle'
+        }
+      },
+      x: {
+        label: { // ADD
+          text: 'Trial No. (#)',
+          position: 'outer-middle'
+        }
+      }
+    }
+});
+
+//BART3:
+var chart = c3.generate({
+    bindto: '#bart3',
     data: {
     url: 'data/bart2.csv',
     x: 'Standard deviation pumps',
@@ -201,48 +274,49 @@ var chart = c3.generate({
     },
     axis: {
       y: {
+                tick: {
+      format: function (y) { return Math.round(y * 100) / 100; }
+    },
         label: { // ADD
-          text: 'Mean pumps',
+          text: 'Mean pumps (count)',
           position: 'outer-middle'
         }
       },
       x: {
+                        tick: {
+      format: function (x) { return Math.round(x * 10) / 10; }
+    },
         label: { // ADD
-          text: 'Standard deviation pumps',
-          position: 'outer-middle'
+          text: 'Standard deviation pumps (sigma)',
+          position: 'outer-middle',
         }
       }
     }
 });
 
-//delayed discounting
+
+//delay1
 var chart = c3.generate({
-    bindto: '#delayeddiscounting',
+    bindto: '#delay1',
     data: {
       columns: [
-        ["trial1", 3.162909984588623, 2.141151011, 23.060561, 1.293748975, 2.407202005, 5.244120001792908],
-        ["trial2",1.913070023059845, 7.04273802, 6.309521973, 3.692605972, 2.042710006, 2.192610025405884],
-        ["trial3",18.41196501255035, 2.159123003, 1.077604949, 1.525524974, 3.723178983, 2.376641988754272],
-        ["trial4",0.6311240196228027, 0.622853994, 0.193563998, 0.242182016, 0.308747947, 1.459280967712402],
-        ["trial5",0.3773999810218811, 0.210361004, 0.240945995, 0.540439963, 0.510918021, 0.6066060066223145],
-        ["trial6",0.5462440252304077, 0.275538027, 0.160519958, 0.175094008, 0.290441036, 0.4630060195922852]
+        ["dd_money_1_month", 3.66421082, 5.582453203, 2.076352787, 3.835914218, 1.913945198, 1.544858217],
+        ["dd_money_6_month", 3.893821339, 1.787569304, 2.909823,  0.888550341, 1.126221001, 2.398314635],
+        ["dd_time_1_month", 4.682818313,  1.465384007, 1.237211645, 1.00313733,  0.459199667, 0.676926653],
+        ["dd_time_6_month", 2.334824661, 1.253489673, 3.344717364, 0.742906332, 0.937547664, 0.65751332]
       ],
-    	type: 'line',
-      types: {
-          'trial1': 'line',
-          'trial2': 'line'
-        },
+      type: 'bar',
     },
     axis: {
       y: {
         label: { // ADD
-          text: 'Y Label',
+          text: 'Average Decision Time (sec)',
           position: 'outer-middle'
         }
       },
       x: {
         label: { // ADD
-          text: 'X Label',
+          text: 'Decision No.',
           position: 'outer-middle'
         }
       }
@@ -250,8 +324,84 @@ var chart = c3.generate({
 });
 
 
-</script>
 
+//delay2
+var chart = c3.generate({
+    bindto: '#delay2',
+    data: {
+      columns: [
+        ["Decision Time", 3.102955741, 2.16738327, 1.587446269,1.545166502],
+      ],
+      type: 'line',
+    },
+    axis: {
+      y: {
+        label: { // ADD
+          text: 'Decision Time (sec)',
+          position: 'outer-middle'
+        }
+      },
+      x: {
+        label: { // ADD
+          text: 'Decision No. (count)',
+          position: 'outer-middle'
+        }
+      }
+    }
+});
+//delay3
+var chart = c3.generate({
+    bindto: '#delay3',
+    data: {
+      columns: [
+        ["Decision Time", 3.646817646, 2.959399641, 2.346929997, 1.934525222, 1.224187928, 1.351611065],
+      ],
+      type: 'line',
+    },
+    axis: {
+      y: {
+        label: { // ADD
+          text: 'Decision Time (sec)',
+          position: 'outer-middle'
+        }
+      },
+      x: {
+        label: { // ADD
+          text: 'Decision No. (count)',
+          position: 'outer-middle'
+        }
+      }
+    }
+});
+// var chart = c3.generate({
+//     bindto: '#delay3',
+//     data: {
+//       columns: [
+//         ["dd_money_1_month", 3.66421082, 5.582453203, 2.076352787, 3.835914218, 1.913945198, 1.544858217],
+//         ["dd_money_6_month", 3.893821339, 1.787569304, 2.909823,  0.888550341, 1.126221001, 2.398314635],
+//         ["dd_time_1_month", 4.682818313,  1.465384007, 1.237211645, 1.00313733,  0.459199667, 0.676926653],
+//         ["dd_time_6_month", 2.334824661, 1.253489673, 3.344717364, 0.742906332, 0.937547664, 0.65751332]
+//       ],
+//       type: 'line',
+//     },
+//     axis: {
+//       y: {
+//         label: { // ADD
+//           text: 'Y Label',
+//           position: 'outer-middle'
+//         }
+//       },
+//       x: {
+//         label: { // ADD
+//           text: 'X Label',
+//           position: 'outer-middle'
+//         }
+//       }
+//     }
+// });
+
+</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.9.0/math.min.js"></script>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
 	    <script src="js/vendor/jquery.js"></script>
 	    <script src="js/vendor/what-input.js"></script>
