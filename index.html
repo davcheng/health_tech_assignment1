@@ -27,7 +27,7 @@
 				<h4 class="text-center">Mean response time (Correct) vs. Mean Accuracy Rate</h4>
         <div id="gonogo1"></div>
         <blockquote>
-            <p>Based on the collected data, the first graph for Go/No Go delineates the tradeoff between response accuracy, and response speed. As depicted in the graph, the test results indicate that a slower response time leads to an improvement in response accuracy.</p>
+            <p>Based on the collected data, the first graph for Go/No Go delineates the tradeoff between response accuracy, and response speed. As depicted in the graph, the test results indicate that a slower response time leads to an improvement in response accuracy. However</p>
         </blockquote>
 
         <h4 class="text-center">Minimum response time vs. Mean Accuracy Rate</h4>
@@ -50,14 +50,17 @@
 				<h3><strong>2. Balloon betting Analogue Risk Test (BART)<strong></h3>
         <!-- first chart -->
         <h4 class="text-center">Mean Pumps Comparison (after explosion/after no explosion)</h4>
-				<div id="bartone"></div>
+				<div id="bart1"></div>
         <blockquote>
             <p>In the Balloon betting analogue risk test, the first point visualized depicts the comparison between number of pumps following an explosion versus the number following no explosion (collection). The results show that in almost all circumstances, the subject was more risk adverse following an explosion, with a resulting pump average of XXXX post-explosion versus XXXX post-no-explosion.</p>
         </blockquote>
 
         <!-- first chart -->
         <h4 class="text-center"># of Explosions vs. Mean Pumps</h4>
-        <div id="barttwo"></div>
+        <div id="bart2"></div>
+        <blockquote>
+            <p>The above graph illustrates that .</p>
+        </blockquote>        
 			</div>
 	    </div>
 	    <div class="row">
@@ -157,7 +160,7 @@ var chart = c3.generate({
 
 //BART1: pump after explosion vs pump after no explosion
 var chart = c3.generate({
-    bindto: '#bartone',
+    bindto: '#bart1',
     data: {
       columns: [
         ['Mean pumps after no explosion', 3.666666667, 2.272727273, 3.222222222, 6.625, 3.8, 3.545454545, 3.666666667, 3.333333333],
@@ -186,40 +189,12 @@ var chart = c3.generate({
     }
 });
 
-//BART1: pump after explosion vs pump after no explosion
-// var chart = c3.generate({
-//     bindto: '#bartone',
-//     data: {
-//       url: 'data/old/bart.csv',
-//         type: 'bar',
-//     x: 'Mean pumps after explosion',
-//     y: 'Mean pumps after no explosion'
-//     },
-//     axis: {
-//       y: {
-//         label: { // ADD
-//           text: 'Mean pumps after no explosion',
-//           position: 'outer-middle'
-//         }
-//       },
-//       x: {
-//         label: { // ADD
-//           text: 'Mean pumps after explosion',
-//           position: 'outer-middle'
-//         }
-//       }
-//     }
-// });
 
 //BART2:
 var chart = c3.generate({
-    bindto: '#barttwo',
+    bindto: '#bart2',
     data: {
-      // columns: [
-      //   ['data1', 30, 200, 100, 400, 150, 250],
-      //   ['data2', 50, 20, 10, 40, 15, 25]
-      // ],
-    url: 'data/BART_2.csv',
+    url: 'data/bart2.csv',
     x: 'Standard deviation pumps',
     y: 'Mean pumps',
      // type: 'line'
@@ -246,13 +221,17 @@ var chart = c3.generate({
     data: {
       columns: [
         ["trial1", 3.162909984588623, 2.141151011, 23.060561, 1.293748975, 2.407202005, 5.244120001792908],
-        [1.913070023059845, 7.04273802, 6.309521973, 3.692605972, 2.042710006, 2.192610025405884],
-        [18.41196501255035, 2.159123003, 1.077604949, 1.525524974, 3.723178983, 2.376641988754272],
-        [0.6311240196228027, 0.622853994, 0.193563998, 0.242182016, 0.308747947, 1.459280967712402],
-        [0.3773999810218811, 0.210361004, 0.240945995, 0.540439963, 0.510918021, 0.6066060066223145],
-        [0.5462440252304077, 0.275538027, 0.160519958, 0.175094008, 0.290441036, 0.4630060195922852]
+        ["trial2",1.913070023059845, 7.04273802, 6.309521973, 3.692605972, 2.042710006, 2.192610025405884],
+        ["trial3",18.41196501255035, 2.159123003, 1.077604949, 1.525524974, 3.723178983, 2.376641988754272],
+        ["trial4",0.6311240196228027, 0.622853994, 0.193563998, 0.242182016, 0.308747947, 1.459280967712402],
+        ["trial5",0.3773999810218811, 0.210361004, 0.240945995, 0.540439963, 0.510918021, 0.6066060066223145],
+        ["trial6",0.5462440252304077, 0.275538027, 0.160519958, 0.175094008, 0.290441036, 0.4630060195922852]
       ],
-  //   	type: 'line'
+    	type: 'line',
+      types: {
+          'trial1': 'line',
+          'trial2': 'line'
+        },
     },
     axis: {
       y: {
